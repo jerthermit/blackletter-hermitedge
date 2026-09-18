@@ -1,0 +1,342 @@
+/* frontend/src/index.css */
+
+/*
+  Blackletter / AI Law Research Assistant
+  Global design foundation only.
+
+  Intent:
+  - legal research desk
+  - docket surface
+  - memorandum reader
+  - no generic SaaS utility leftovers
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600;6..72,700;6..72,800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap");
+
+:root {
+  --color-bg-app: #f4f0e8;
+  --color-bg-paper: #fffdf7;
+  --color-bg-vellum: #f8f3e8;
+  --color-bg-docket: #ebe4d6;
+  --color-bg-ink: #11100e;
+  --color-bg-redaction: #090807;
+
+  --color-text-primary: #17130d;
+  --color-text-secondary: #554b3e;
+  --color-text-tertiary: #8a7d69;
+  --color-text-inverse: #fffdf7;
+
+  --color-seal: #991b1b;
+  --color-seal-deep: #6f1212;
+  --color-seal-soft: #f4ded8;
+
+  --color-border-subtle: #ddd2bf;
+  --color-border-strong: #17130d;
+  --color-border-muted: #c8bda9;
+
+  --color-success: #166534;
+  --color-warning: #92400e;
+  --color-error: #991b1b;
+  --color-info: #1f3a5f;
+
+  --font-ui: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-legal: "Newsreader", Georgia, "Times New Roman", serif;
+  --font-data: "IBM Plex Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --radius-none: 0px;
+
+  --splitter-width: 2px;
+  --command-header-height: 52px;
+  --memo-measure: 75ch;
+
+  --focus-ring: 0 0 0 2px var(--color-bg-paper), 0 0 0 4px var(--color-seal);
+
+  --selection-bg: #17130d;
+  --selection-text: #fffdf7;
+}
+
+/* Reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  min-height: 100%;
+  background: var(--color-bg-app);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  text-rendering: optimizeLegibility;
+  scroll-behavior: auto;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  background:
+    linear-gradient(90deg, rgba(23, 19, 13, 0.022) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(23, 19, 13, 0.018) 1px, transparent 1px),
+    var(--color-bg-app);
+  background-size: 32px 32px;
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Typography base */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--color-text-primary);
+  font-family: var(--font-legal);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+}
+
+h1 {
+  font-size: clamp(3rem, 8vw, 5.0625rem);
+}
+
+h2 {
+  font-size: clamp(2.25rem, 5vw, 3.375rem);
+}
+
+h3 {
+  font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  max-width: var(--memo-measure);
+  color: var(--color-text-secondary);
+  font-family: var(--font-legal);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+small {
+  color: var(--color-text-tertiary);
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  letter-spacing: 0.01em;
+}
+
+strong {
+  color: var(--color-text-primary);
+  font-weight: 800;
+}
+
+em {
+  font-family: var(--font-legal);
+}
+
+/* Legal text primitives */
+.citation,
+.docket-id,
+.case-date,
+.confidence-score,
+.legal-metadata {
+  font-family: var(--font-data);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.005em;
+}
+
+.case-title,
+.memo-title,
+.legal-heading {
+  font-family: var(--font-legal);
+  letter-spacing: -0.035em;
+}
+
+.memo-body {
+  max-width: var(--memo-measure);
+  font-family: var(--font-legal);
+  font-size: 1rem;
+  line-height: 1.72;
+}
+
+.redaction-block {
+  position: relative;
+  display: inline-block;
+  min-width: 7ch;
+  color: transparent;
+  background: var(--color-bg-redaction);
+}
+
+.redaction-block::selection {
+  color: var(--selection-text);
+  background: var(--selection-bg);
+}
+
+.splitter-rule {
+  width: var(--splitter-width);
+  background: var(--color-border-strong);
+  cursor: col-resize;
+  touch-action: none;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration-color: var(--color-seal);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  color: var(--color-seal);
+}
+
+/* Controls */
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+button {
+  border-radius: var(--radius-none);
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid var(--color-border-muted);
+  border-radius: var(--radius-none);
+  background: var(--color-bg-paper);
+  color: var(--color-text-primary);
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--color-text-tertiary);
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+button,
+a,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+img,
+picture,
+svg,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Selection */
+::selection {
+  color: var(--selection-text);
+  background: var(--selection-bg);
+}
+
+/* Scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-strong) var(--color-bg-vellum);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-vellum);
+  border-left: 1px solid var(--color-border-subtle);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-bg-ink);
+  border: 2px solid var(--color-bg-vellum);
+  border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-seal);
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--color-bg-vellum);
+}
+
+/* Surface primitives */
+.legal-surface {
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
+  background: var(--color-bg-paper);
+  box-shadow: none;
+}
+
+.vellum-surface {
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 0;
+  background: var(--color-bg-vellum);
+  box-shadow: none;
+}
+
+.no-soft-shadow {
+  box-shadow: none !important;
+}
+
+.zero-radius {
+  border-radius: 0 !important;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  :root {
+    --command-header-height: 52px;
+  }
+
+  body {
+    background-size: 24px 24px;
+  }
+}
